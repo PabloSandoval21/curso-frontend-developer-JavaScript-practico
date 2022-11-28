@@ -6,6 +6,7 @@ menuEmail.addEventListener('click', toggleDesktopMenu);
 function toggleDesktopMenu() {
     desktopMenu.classList.toggle('inactive');
     orderMenu.classList.add('inactive');
+    productDetailContainer.classList.add('inactive');
 }
 
 const menuBars = document.querySelector('.menu');
@@ -16,6 +17,7 @@ menuBars.addEventListener('click', toggleMobileMenu);
 function toggleMobileMenu() {
     mobileMenu.classList.toggle('inactive');
     orderMenu.classList.add('inactive');
+    productDetailContainer.classList.add('inactive');
 }
 
 const shoppIcon = document.querySelector('.navbar-shopping-cart');
@@ -27,12 +29,31 @@ function toggleOrderMenu() {
     orderMenu.classList.toggle('inactive');
     mobileMenu.classList.add('inactive');
     desktopMenu.classList.add('inactive');
+    productDetailContainer.classList.add('inactive');
 }
 
 
+const productDetailContainer = document.querySelector('.product-detail--Secondary');
 
 
-const cardsContainer = document.querySelector('.cards-container')
+function openProductDetailAside() {
+    productDetailContainer.classList.remove('inactive');
+    mobileMenu.classList.add('inactive');
+    desktopMenu.classList.add('inactive');
+    orderMenu.classList.add('inactive');
+}
+
+
+const productDetailCloseIcon = document.querySelector('.product-detail-close');
+
+productDetailCloseIcon.addEventListener('click', closeProductDetailAside)
+
+function closeProductDetailAside() {
+    productDetailContainer.classList.add('inactive');
+}
+
+
+const cardsContainer = document.querySelector('.cards-container');
 
 const productList = [];
 
@@ -86,10 +107,11 @@ function renderProducts(array) {
     for (product of array) {
         const productCard = document.createElement('div');
         productCard.classList.add('product-card');
+        
     
         const productImg = document.createElement('img');
         productImg.setAttribute('src', product.image);
-    
+        productImg.addEventListener('click', openProductDetailAside);
         const productInfo = document.createElement('div');
         productInfo.classList.add('product-info');
     
@@ -101,11 +123,11 @@ function renderProducts(array) {
         const productName = document.createElement('p')
         productName.innerText = product.name;
     
-        productDetails.append(productPrice, productName);
-    
         const productInfoFigure = document.createElement('figure');
         const productImgCart = document.createElement('img');
         productImgCart.setAttribute('src', './icons/bt_add_to_cart.svg');
+
+        productDetails.append(productPrice, productName);
     
         productInfoFigure.append(productImgCart);
     
